@@ -1,0 +1,27 @@
+<section id="banner">
+</section>
+
+<article id="main">    
+  <section class="wrapper style3 container">
+
+    <form>
+      <div class="row half collapse-at-2">
+        <div class="6u">
+          <input type="text" name="name" placeholder="Activity" ng-model="newActivity.name" />
+        </div>
+        <div class="2u">
+      <button class="button special" type="submit" ng-click="addActivity(newActivity);newActivity = null;">add</button>
+        </div>
+      </div>
+    </form>
+
+    <ul id="activities" ng-show="activities.length">
+      <li ng-init="showDifficultyForm=1" ng-repeat="activity in activities | reverse">
+        {{activity.name}}
+        <button ng-click="removeActivity(activity)">delete</button>
+        <button ng-click="showDifficultyForm=showDifficultyForm*-1">difficulty</button>
+      <div ng-if="showDifficultyForm==-1" ng-include="'partials/difficulty.html'" ng-controller="DifficultiesCtrl"></div>
+      </li>
+    </ul>
+  </section>
+</article>
