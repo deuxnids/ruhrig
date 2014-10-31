@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
   .controller('HomeCtrl', ['$scope', 'fbutil', 'user', 'FBURL', function($scope, fbutil, user, FBURL) {
     $scope.syncedValue = fbutil.syncObject('syncedValue');
+    console.log( $scope.syncedValue );
     $scope.user = user;
     $scope.FBURL = FBURL;
   }])
@@ -18,6 +19,55 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     };
   }])
 
+
+  .controller('SectionsCtrl', ['$scope', 'sectionList', function($scope, sectionList) {
+    $scope.sections = sectionList;
+    $scope.addSection = function(newSection) {
+      if( newSection ) {
+        $scope.sections.$add( newSection );
+      }
+    };
+    $scope.removeSection = function(section) {
+        $scope.sections.$remove( section );
+    };
+  }])
+
+  .controller('DifficultiesCtrl', [ '$scope', 'FBURL','$firebase',  function($scope, FBURL,$firebase) { 
+    var fb = new Firebase(FBURL);
+    var ref = new Firebase.util.intersection( 
+    {ref:fb.child('activities/'+$scope.activity.$id+'/difficulties'), keyMap:{difficulties:'difficulties'}  }, 
+    {ref:fb.child('difficulties') } )  ;
+    $scope.difficulties = $firebase(ref).$asArray();
+
+
+
+   $scope.activity =  $firebase(new Firebase(FBURL+"/activities/"+$scope.activity.$id)).$asObject();
+   console.log($scope.activity);
+    $scope.addDifficulty = function(newDifficulty) {
+      if( newDifficulty ) {
+        newDifficulty.difficulties = true;
+        $scope.difficulties.$add(newDifficulty)
+      }
+    };
+    $scope.removeDifficulty = function(difficulty) {
+      $scope.difficulties.$remove(difficulty);
+    };
+  }])
+
+  .controller('ActivitiesCtrl', ['$scope', 'activityList', 'FBURL',function($scope, activityList) {
+
+   $scope.activities = activityList;
+
+   $scope.addActivity = function(newActivity) {
+      if( newActivity ) {
+        $scope.activities.$add( newActivity );
+      }
+    };
+    $scope.removeActivity = function(activity) {
+        $scope.activities.$remove( activity );
+    };
+  }])
+
   .controller('LoginCtrl', ['$scope', 'simpleLogin', '$location', function($scope, simpleLogin, $location) {
     $scope.email = null;
     $scope.pass = null;
@@ -28,7 +78,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       $scope.err = null;
       simpleLogin.login(email, pass)
         .then(function(/* user */) {
-          $location.path('/account');
+          $location.path('/home');
         }, function(err) {
           $scope.err = errMessage(err);
         });

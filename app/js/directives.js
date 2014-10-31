@@ -65,4 +65,6 @@ angular.module('myApp.directives', ['simpleLogin'])
         simpleLogin.watch(update, scope);
       }
     };
-  }]);
+  }])
+
+;

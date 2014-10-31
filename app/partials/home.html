@@ -1,9 +1,53 @@
-<h2>Home</h2>
+<section id="banner">
+  <div class="inner">
+    <p>This is </p>
+    <header>    
+      <h2>[ˈryːrɪç]</h2>
+    </header>       
+    <p>an innovative planing tool </p>
+    <p>for outdoor activities.</p>
+    <br/>
+    <form>
+      <div class="row half collapse-at-2">
+        <div class="4u">
+          <input type="date" name="name" placeholder="When" />
+        </div>
+        <div class="4u">
+          <select name="carlist" >
+            <option value="climbing">Climbing</option>
+            <option value="biking">Biking</option>
+          </select>
+        </div>
+        <div class="4u">
+          <input type="text" name="subject" placeholder="From where" />
+        </div>
+      </div>
+    </form>
+    <footer>
+      <ul class="buttons vertical">
+        <li><a href="#/activities" class="button fit scrolly">Let's go</a></li>
+      </ul>
+    </footer>
+  </div>        
+</section>
 
-<p class="status good" ng-show-auth>Hello! You are logged in with id {{user.uid}}.</p>
-<p class="status" ng-hide-auth>Welcome. You are not <a href="#/login">logged in</a></p>
+<article id="main">
+  <header class="special container">
+    <span class="icon fa-bar-chart-o"></span>
+  </header>
+  <section class="wrapper style3 container">
+  </section>
+</article>
 
-<input ng-model="syncedValue.$value" type="text" ng-change="syncedValue.$save()" /> <b>{{syncedValue.$value}}</b>
-
-<p>Open <a ng-href="{{FBURL}}/syncedValue" target="_blank">Forge</a> or a <a target="_blank" href="#/">new window</a> to see this input update in real time.</p>
-
+<section id="cta">
+  <header>
+    <h2>Ready to do <strong>something</strong>?</h2>
+    <p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>
+  </header>
+  <footer>
+    <ul class="buttons">
+      <li><a href="#" class="button special">Take My Money</a></li>
+      <li><a href="#" class="button">LOL Wut</a></li>
+    </ul>
+  </footer>
+</section>
