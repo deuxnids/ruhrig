@@ -1,0 +1,34 @@
+<section id="banner">
+</section>
+
+<article id="main">    
+  <section class="wrapper style3 container">
+
+    <form>
+      <div class="row half collapse-at-2">
+        <div class="2u">
+          <input type="text" name="name" placeholder="Trip Name" ng-model="newTrip.name" />
+        </div>
+        <div class="2u">
+          <select ng-click="test" ng-model="newTrip.activity" ng-options="activity.$id as activity.name for activity in activities">
+            <option value=""></option>
+          </select>
+        </div>
+        <div class="2u">
+          <button class="button special" ng-click="addTrip(newTrip);newTrip = null;">add</button>
+        </div>
+      </div>
+
+
+    </form>
+  </section>
+
+  <ul id="trips" ng-show="trips.length">
+    <li ng-repeat="trip in trips | reverse">
+      <section class="wrapper style3 container">
+        <button ng-click="removeTrip(trip)"> delete </button>
+        <div ng-include="'partials/trip.html'" ng-controller="TripCtrl"></div>
+      </section>
+    </li>
+  </ul>
+</article>

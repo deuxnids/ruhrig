@@ -17,22 +17,33 @@
      .factory('sectionList', ['fbutil', function(fbutil) {
        return fbutil.syncArray('sections', {limit: 10, endAt: null});
      }])
-     .factory('difficultyList', ['fbutil', function(fbutil) {
-      return {
-        listFor: function(activity) {
-          var difficulties = [];
-          if(activity.difficulties){
-            activity.difficulties.forEach(function(difficulty){
-              console.log(difficulty);
-              difficulties.push(fbutil.syncObject('difficulties/'+difficulty )); 
-            })
-          }
-          return difficulties;
-        },
-        array: fbutil.syncArray('difficulties', {limit: 10, endAt: null} ),
-        path:  fbutil.ref('difficulties'),
+     .factory('tripList', ['fbutil', function(fbutil) {
+       return fbutil.syncArray('trips', {limit: 10, endAt: null});
+     }])
+     .factory('activityList', ['fbutil', function(fbutil) {
+       return fbutil.syncArray('activities', {limit: 10, endAt: null});
+     }])
+     .factory('levelList', ['fbutil', function(fbutil) {
+       return fbutil.syncArray('activities', {limit: 10, endAt: null});
+     }])
 
+     .factory('timetable', ['$http', function($http) {
+      return {
+        a: "a",
+        getConnections: function(start,stop, callback)
+        {
+           $http.get('http://transport.opendata.ch/v1/connections?from='+start+'&to='+stop )
+            .success(callback) 
+              
+            .error(function(data, status, headers, config) 
+              {
+                console.log(data);
+              })
+      }
       };
       }]);
+
+
+
 })();
 

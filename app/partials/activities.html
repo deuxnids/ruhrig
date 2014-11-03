@@ -14,14 +14,16 @@
         </div>
       </div>
     </form>
-
-    <ul id="activities" ng-show="activities.length">
-      <li ng-init="showDifficultyForm=1" ng-repeat="activity in activities | reverse">
-        {{activity.name}}
-        <button ng-click="removeActivity(activity)">delete</button>
-        <button ng-click="showDifficultyForm=showDifficultyForm*-1">difficulty</button>
-      <div ng-if="showDifficultyForm==-1" ng-include="'partials/difficulty.html'" ng-controller="DifficultiesCtrl"></div>
-      </li>
-    </ul>
   </section>
+
+  <ul id="activities" ng-show="activities.length">
+    <li ng-init="showDifficultyForm=1" ng-repeat="activity in activities | reverse">
+      <section class="wrapper style3 container">
+        <h2>{{activity.name}} 
+        <button ng-click="removeActivity(activity)">delete</button>
+        </h2>
+        <div ng-include="'partials/level.html'" ng-controller="LevelsCtrl"></div>
+      </section>
+    </li>
+  </ul>
 </article>

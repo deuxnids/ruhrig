@@ -42,12 +42,17 @@ angular.module('myApp.routes', ['ngRoute', 'simpleLogin'])
       // require user to be logged in to view this route
       // the whenAuthenticated method below will resolve the current user
       // before this controller loads and redirect if necessary
-      authRequired: true
+      //authRequired: true
     },
-    '/sections': {
-      templateUrl: 'partials/sections.html',
-      controller: 'SectionsCtrl',
-      authRequired: true
+    '/routes': {
+      templateUrl: 'partials/routes.html',
+      controller: 'RoutesCtrl',
+     // authRequired: true
+    },
+    '/trips': {
+      templateUrl: 'partials/trips.html',
+      controller: 'TripsCtrl',
+     // authRequired: true
     }
   })
 

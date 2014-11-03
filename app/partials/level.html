@@ -1,0 +1,17 @@
+<form>
+  <div class="row half collapse-at-2">
+    <div class="6u">
+      <input type="text" name="name" placeholder="Level" ng-model="newLevel.name" />
+    </div>
+    <div class="2u">
+  <button class="button special" type="submit" ng-click="addLevel(newLevel);newLevel = null;">add</button>
+    </div>
+  </div>
+</form>
+
+<ul id="levels" ng-show="levels.length">
+  <li ng-repeat="level in levels | reverse">  
+  	{{level.name}}
+  	<button ng-click="removeLevel(level)">delete</button>
+  </li>
+</ul>

@@ -1,0 +1,44 @@
+<section id="banner">
+</section>
+
+<article id="main">    
+  <section class="wrapper style3 container">
+    <form>
+      <div class="row half collapse-at-2">
+        <div class="2u">
+          <input type="text" name="name" placeholder="Route Start" ng-model="newRoute.start" />
+        </div>
+        <div class="2u">
+          <input type="text" name="name" placeholder="Route Stop" ng-model="newRoute.stop" />
+        </div>
+        <div class="2u">
+          <input type="text" name="name" placeholder="Route Time" ng-model="newRoute.time" />
+        </div>
+        <div class="2u">
+      <button class="button special" ng-click="addRoute(newRoute);newRoute = null;">add</button>
+        </div>
+      </div>
+
+      <div class="row half collapse-at-2">
+        <div class="2u">
+          <select ng-change="getLevels()" ng-model="newRoute.activity" ng-options="activity as activity.name for activity in activities">
+            <option value=""></option>
+          </select>
+        </div>
+        <div class="2u" ng-if="newRoute.activity" ng-repeat="difficulty in newRoute.activity.levels">
+             {{level.name}} <input type="number" placeholder="Level" ng-model="level.grade" />
+        </div>
+      </div>
+    </form>
+  </section>
+        <section class="wrapper style3 container">
+
+    <ul id="routes" ng-show="routes.length">
+      <li ng-repeat="route in routes | reverse">
+          <h3>{{route.start}} -> {{route.stop}} <strong> {{route.activity.name}} </strong> ( {{route.duration}}) </h3>
+          <span ng-repeat="level in route.levels" > {{level.name}} ({{level.help}}):{{level.value}} </span>
+      </li>
+    </ul>
+        </section>
+
+</article>
