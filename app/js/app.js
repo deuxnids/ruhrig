@@ -8,7 +8,8 @@ angular.module('myApp', [
     'myApp.directives',
     'myApp.filters',
     'myApp.routes',
-    'myApp.services'
+    'myApp.services',
+    'ui.bootstrap'
   ])
 
   .run(['simpleLogin', function(simpleLogin) {
