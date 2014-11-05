@@ -26,7 +26,12 @@
   <ul id="trips" ng-show="trips.length">
     <li ng-repeat="trip in trips | reverse">
       <section class="wrapper style3 container">
-        <button ng-click="removeTrip(trip)"> delete </button>
+        <h2> {{trip.name}}
+          <button class="btn btn-danger" 
+                  ng-click="removeTrip(trip)">
+                  <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </h2>
         <div ng-include="'partials/trip.html'" ng-controller="TripCtrl"></div>
       </section>
     </li>
