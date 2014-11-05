@@ -65,7 +65,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     };
   }])
 
-  .controller('TripCtrl', [ '$scope', 'activityList','FBURL','$firebase','timetable',  function($scope ,activityList ,FBURL,$firebase,timetable) { 
+  .controller('TripCtrl', [ '$scope', 'activityList','FBURL','$firebase','timetable','$http',  function($scope ,activityList ,FBURL,$firebase,timetable,$http) { 
     $scope.activities = activityList;
     var fb = new Firebase(FBURL);
     var ref = new Firebase.util.intersection( 
@@ -90,6 +90,21 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       });
 
     });
+
+  $scope.selected = undefined;
+
+      $scope.getLocation = function(val) {
+    return $http.get('http://transport.opendata.ch/v1/locations', {
+      params: {
+        query: val,
+      }
+    }).then(function(response){
+      console.log(response.data.stations);
+      return response.data.stations.map(function(item){
+        return item.name;
+      });
+    });
+  };
 
     $scope.addRoute = function(newRoute){
       newRoute.route = true;
