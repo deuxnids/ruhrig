@@ -77,8 +77,9 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     {ref:fb.child('routes') , keyMap:{ start:'start',stop:'stop',duration:'duration',activity_name:'activity_name',levels:'levels' }} )  ;
     $scope.routes = $firebase(ref).$asArray();
 
-    //$scope.routes = [{start:"route name", stop:"stop", duration:"2h",activity:"climbing"},{start:"route name", stop:"stop", duration:"2h",activity:"climbing"} ];
     $scope.newRoute = {};
+    $scope.max = 5;
+
     $scope.addRoute = function(newRoute){
       newRoute.route = true;
       newRoute.activity_name = newRoute.activity.name;
@@ -88,7 +89,6 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       $scope.routes.$remove(route);
     };
     $scope.getLevels = function(newRoute){
-
       var fb = new Firebase(FBURL);
       var ref = new Firebase.util.intersection( 
       {ref:fb.child('activities/'+newRoute.activity.$id+'/levels'), keyMap:{level:'level'}  }, 

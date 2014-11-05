@@ -12,27 +12,26 @@
     </div>
       </div>
   <div class="row half collapse-at-2">
-
     <div class="2u">
       <select 
-              ng-model  ="newRoute.activity" 
-              ng-options="activity as activity.name for activity in activities"
-              ng-change ="getLevels(newRoute)" >
-
-        <option value=""></option>
+        ng-model  ="newRoute.activity" 
+        ng-options="activity as activity.name for activity in activities"
+        ng-change ="getLevels(newRoute)" >
       </select>
     </div>
     <div class="2u" ng-repeat="level in newRoute.levels">
       <label> {{level.name}}</label>
-      <input type="text" name="name" placeholder="Level" ng-model="level.value" />
+      <rating ng-model="level.value" 
+        max="max" 
+        readonly="false" 
+        on-hover="hoveringOver(value)">
+      </rating>
     </div>
-    
     <div class="2u">
       <button class="button special" ng-click="addRoute(newRoute);newRoute = null;">add</button>
     </div>
   </div>
 </form>
-
 
 <table class="table">
   <tr>
@@ -41,12 +40,21 @@
     <td>Duration</td>
     <td>Activity</td>
     <td></td>
+    <td></td>
   </tr>
   <tr ng-repeat="route in routes">
     <td>{{route.start}}</td>
     <td>{{route.stop}}</td>
     <td>{{route.duration}}</td>
     <td>{{route.activity_name}}</td>
+    <td ng-repeat="level in route.levels" >
+      {{level.name}}
+      <rating ng-model="level.value" 
+        max="max" 
+        readonly="true">
+      </rating>
+
+    </td>
     <td>  <button class="btn btn-danger" ng-click="removeRoute(route)"><span class="glyphicon glyphicon-trash"></span>
 </button>    </td>
   </tr>
