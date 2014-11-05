@@ -67,18 +67,29 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
 
   .controller('TripCtrl', [ '$scope', 'activityList','FBURL','$firebase','timetable',  function($scope ,activityList ,FBURL,$firebase,timetable) { 
     $scope.activities = activityList;
-    $scope.transport = {a:"ss"};
-    timetable.getConnections("sion","sierre",function (data) {
-            $scope.transport = data;
-        }  );
     var fb = new Firebase(FBURL);
     var ref = new Firebase.util.intersection( 
     {ref:fb.child('trips/'+$scope.trip.$id+'/routes') , keyMap:{route:'route'} }, 
     {ref:fb.child('routes') , keyMap:{ start:'start',stop:'stop',duration:'duration',activity_name:'activity_name',levels:'levels' }} )  ;
     $scope.routes = $firebase(ref).$asArray();
 
+
+
     $scope.newRoute = {};
     $scope.max = 5;
+
+    $scope.$watch('routes',function(val){
+      var start = null;
+      var stop = null;
+      $scope.routes.$loaded().then(function(array) {
+          start = array[0].start;
+          stop = array[0].stop;
+          timetable.getConnections(start,stop,function (data) {
+        $scope.transport = data;
+      });    
+      });
+
+    });
 
     $scope.addRoute = function(newRoute){
       newRoute.route = true;

@@ -59,15 +59,18 @@
   </tr>
 </table>
 
+<h3>Timetable</h3>
 
 <table class="table">
   <tr>
   </tr>
   <tr ng-repeat="connection in transport.connections">
     <td>{{connection.from.station.name}}</td>
-
     <td>{{connection.from.departure| date:'medium'}}</td>
     <td>{{connection.from.platform}}</td>
+    <td>{{connection.to.station.name}}</td>
+    <td>{{connection.to.arrival| date:'medium'}}</td>
+    <td>{{connection.to.platform}}</td>
   </tr>
 </table>
 
