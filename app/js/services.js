@@ -65,13 +65,13 @@
       }, 
       getStation: function(val)
       {
-        $http.get('http://transport.opendata.ch/v1/locations', {
+        return $http.get('http://transport.opendata.ch/v1/locations', {
           params: {
             query: val,
           }
         }).then(function(response){
           return response.data.stations.map(function(item){
-            return item.name;
+            return item;
           });
         });
       }

@@ -31,20 +31,21 @@ $scope.map = {
     };
   }])
 
-  .controller('TripCtrl', [ '$scope', 'activityList','timetable','routes','levels',  function($scope ,activityList,timetable,routes,levels) { 
+  .controller('TripCtrl', [ '$scope', 'activityList','timetable','routes','levels','$http',  function($scope ,activityList,timetable,routes,levels,$http) { 
     $scope.activities = activityList;
     $scope.newRoute = {};
+    
     $scope.max = 5;
+    $scope.selected = undefined;
 
     $scope.routes = routes.forTrip($scope.trip.$id); 
-    $scope.selected = undefined;
 
     $scope.$watch('routes',function(val){
       var start = null;
       var stop = null;
       $scope.routes.$loaded().then(function(array) {
           start = array[0].start;
-          stop = array[0].stop;
+          stop  = array[0].stop;
           timetable.getConnections(start,stop,function (data) {
             $scope.transport = data;
           });    
@@ -52,7 +53,7 @@ $scope.map = {
     });
 
     $scope.getLocation = function(val) {
-      return timetable.getLocation(val);
+      return timetable.getStation(val);
     };
     $scope.addRoute = function(newRoute){
       newRoute.route = true;
