@@ -9,7 +9,7 @@ angular.module('myApp', [
     'myApp.filters',
     'myApp.routes',
     'myApp.services',
-    'ui.bootstrap'
+    'ui.bootstrap','google-maps'.ns()
   ])
 
   .run(['simpleLogin', function(simpleLogin) {

@@ -51,6 +51,13 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
 
 
  .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList',  function($scope, tripList,activityList,routes) { 
+$scope.map = {
+    center: {
+        latitude: 45,
+        longitude: -73
+    },
+    zoom: 8
+};
     $scope.trips = tripList;
     $scope.activities = activityList;
     $scope.removeTrip = function(trip){
@@ -63,7 +70,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     };
   }])
 
-  .controller('TripCtrl', [ '$scope', 'activityList','timetable','$http','routes','levels',  function($scope ,activityList,timetable,$http,routes,levels) { 
+  .controller('TripCtrl', [ '$scope', 'activityList','timetable','routes','levels',  function($scope ,activityList,timetable,routes,levels) { 
     $scope.activities = activityList;
     $scope.newRoute = {};
     $scope.max = 5;
@@ -86,7 +93,6 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     $scope.getLocation = function(val) {
       return timetable.getLocation(val);
     };
-
     $scope.addRoute = function(newRoute){
       newRoute.route = true;
       newRoute.activity_name = newRoute.activity.name;
