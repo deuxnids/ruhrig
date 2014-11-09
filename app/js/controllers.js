@@ -11,45 +11,6 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
   }])
 
 
-
-  .controller('RoutesCtrl', ['$scope','FBURL','$firebase', function($scope,FBURL,$firebase) {
-    /*
-    var fb = new Firebase(FBURL);
-    var ref = new Firebase.util.join(
-      {
-        ref: fb.child('activities') ,
-        keyMap: {name: 'name',  levels:fb.child('levels') }
-      }
-    );
-    $scope.levels = $firebase(ref).$asArray();
-    $scope.routes = [ {activity:"climbing" }];
-    $scope.activities = [ {name:"climbing" , difficulties:[{name:"technical skill"}, {name:"technical skill"}]}];
-    var ref = new Firebase.util.intersection( 
-    {ref:fb.child('activities/'+$scope.newSection.activity.$id+'/levels'), keyMap:{level:'level'}  }, 
-    {ref:fb.child('routes') , keyMap:{ start:'start' }} )  ;
-    */
-
-    $scope.routes = [{  name:"name of route",
-                        start:"start",stop:"stop",
-                        duration:"10", activity:{name:"climbing"}, 
-                        levels:[{name:"level_name",value:"5", help:"help text"}] }];
-    $scope.activities = [{name:"climbing", levels:[{name:"level 1"}] }, {name:"biking" }]; 
-
-    $scope.getLevels = function(){
-      console.log($scope.newRoute.activity);
-
-    };
-    $scope.addRoute = function(newRoute) {
-      if( newRoute ) {
-        $scope.routes.$add( newRoute );
-      }
-    };
-    $scope.removeRoute = function(route) {
-        $scope.routes.$remove( route );
-    };
-  }])
-
-
  .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList',  function($scope, tripList,activityList,routes) { 
 $scope.map = {
     center: {
