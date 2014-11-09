@@ -13,6 +13,14 @@ angular.module('firebase.utils', ['firebase', 'myApp.config'])
           return syncData.apply(null, arguments).$asArray();
         },
 
+        syncMappedArray: function(path, id , paths, keyMap, keyMaps){
+          var fb  = new $window.Firebase(FBURL);
+          var ref = new Firebase.util.intersection( 
+            {ref:fb.child(path+'/'+id+'/'+paths) , keyMap:keyMap }, 
+            {ref:fb.child(paths                ) , keyMap:keyMaps} );
+          return $firebase(ref).$asArray();
+        },
+
         ref: firebaseRef
       };
 

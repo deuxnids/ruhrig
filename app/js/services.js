@@ -26,6 +26,29 @@
      .factory('levelList', ['fbutil', function(fbutil) {
        return fbutil.syncArray('activities', {limit: 10, endAt: null});
      }])
+     .factory('levels', ['fbutil', function(fbutil) {
+       return {
+        forActivity: function(id){
+          return fbutil.syncMappedArray('activities', id , 'levels', 
+                                        {level:'level'}, 
+                                        { name:'name' });
+        }
+       };
+     }])
+
+     .factory('routes', ['fbutil', function(fbutil) {
+       return {
+        forTrip: function(id){
+          return fbutil.syncMappedArray('trips', id , 'routes', 
+                                        { route:'route'}, 
+                                        { start:'start',
+                                          stop:'stop',
+                                          duration:'duration',
+                                          activity_name:'activity_name',
+                                          levels:'levels' });
+        }
+       };
+     }])
 
      .factory('timetable', ['$http', function($http) {
       return {

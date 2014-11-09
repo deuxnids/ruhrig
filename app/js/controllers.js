@@ -50,7 +50,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
   }])
 
 
- .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList',  function($scope, tripList,activityList ) { 
+ .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList',  function($scope, tripList,activityList,routes) { 
     $scope.trips = tripList;
     $scope.activities = activityList;
     $scope.removeTrip = function(trip){
@@ -63,18 +63,13 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     };
   }])
 
-  .controller('TripCtrl', [ '$scope', 'activityList','FBURL','$firebase','timetable','$http',  function($scope ,activityList ,FBURL,$firebase,timetable,$http) { 
+  .controller('TripCtrl', [ '$scope', 'activityList','timetable','$http','routes','levels',  function($scope ,activityList,timetable,$http,routes,levels) { 
     $scope.activities = activityList;
-    var fb = new Firebase(FBURL);
-    var ref = new Firebase.util.intersection( 
-    {ref:fb.child('trips/'+$scope.trip.$id+'/routes') , keyMap:{route:'route'} }, 
-    {ref:fb.child('routes') , keyMap:{ start:'start',stop:'stop',duration:'duration',activity_name:'activity_name',levels:'levels' }} )  ;
-    $scope.routes = $firebase(ref).$asArray();
-
-
-
     $scope.newRoute = {};
     $scope.max = 5;
+
+    $scope.routes = routes.forTrip($scope.trip.$id); 
+    $scope.selected = undefined;
 
     $scope.$watch('routes',function(val){
       var start = null;
@@ -83,25 +78,22 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
           start = array[0].start;
           stop = array[0].stop;
           timetable.getConnections(start,stop,function (data) {
-        $scope.transport = data;
-      });    
-      });
-
-    });
-
-  $scope.selected = undefined;
-
-      $scope.getLocation = function(val) {
-    return $http.get('http://transport.opendata.ch/v1/locations', {
-      params: {
-        query: val,
-      }
-    }).then(function(response){
-      return response.data.stations.map(function(item){
-        return item.name;
+            $scope.transport = data;
+          });    
       });
     });
-  };
+
+    $scope.getLocation = function(val) {
+      return $http.get('http://transport.opendata.ch/v1/locations', {
+        params: {
+          query: val,
+        }
+      }).then(function(response){
+        return response.data.stations.map(function(item){
+          return item.name;
+        });
+      });
+    };
 
     $scope.addRoute = function(newRoute){
       newRoute.route = true;
@@ -112,21 +104,13 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       $scope.routes.$remove(route);
     };
     $scope.getLevels = function(newRoute){
-      var fb = new Firebase(FBURL);
-      var ref = new Firebase.util.intersection( 
-      {ref:fb.child('activities/'+newRoute.activity.$id+'/levels'), keyMap:{level:'level'}  }, 
-      {ref:fb.child('levels') , keyMap:{ name:'name' }} )  ;
-      $scope.newRoute.levels = $firebase(ref).$asArray();
+      $scope.newRoute.levels = levels.forActivity(newRoute.activity.$id) ;
     };
   }])
 
- .controller('LevelsCtrl', [ '$scope', 'FBURL','$firebase',  function($scope, FBURL,$firebase) { 
-    var fb = new Firebase(FBURL);
-    var ref = new Firebase.util.intersection( 
-    {ref:fb.child('activities/'+$scope.activity.$id+'/levels'), keyMap:{level:'level'}  }, 
-    {ref:fb.child('levels') , keyMap:{ name:'name' }} )  ;
-    $scope.levels = $firebase(ref).$asArray();
+ .controller('LevelsCtrl', [ '$scope','levels',  function($scope,levels) { 
 
+    $scope.levels = levels.forActivity($scope.activity.$id);
     $scope.addLevel = function(newLevel) {
       if( newLevel ) {
         newLevel.level = true;
