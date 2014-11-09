@@ -50,13 +50,11 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
   }])
 
 
- .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList','FBURL','$firebase',  function($scope, tripList,activityList,FBURL,$firebase ) { 
+ .controller('TripsCtrl', [ '$scope', 'tripList', 'activityList',  function($scope, tripList,activityList ) { 
     $scope.trips = tripList;
     $scope.activities = activityList;
     $scope.removeTrip = function(trip){
-
         $scope.trips.$remove(trip);
-
     };
     $scope.addTrip = function(newTrip){
       if (newTrip){
@@ -99,7 +97,6 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
         query: val,
       }
     }).then(function(response){
-      console.log(response.data.stations);
       return response.data.stations.map(function(item){
         return item.name;
       });
