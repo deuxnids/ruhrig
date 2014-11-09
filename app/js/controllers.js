@@ -84,15 +84,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     });
 
     $scope.getLocation = function(val) {
-      return $http.get('http://transport.opendata.ch/v1/locations', {
-        params: {
-          query: val,
-        }
-      }).then(function(response){
-        return response.data.stations.map(function(item){
-          return item.name;
-        });
-      });
+      return timetable.getLocation(val);
     };
 
     $scope.addRoute = function(newRoute){
