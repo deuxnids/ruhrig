@@ -38,7 +38,28 @@ $scope.map = {
     $scope.max = 5;
     $scope.selected = undefined;
 
+    $scope.markers = [];
+
     $scope.routes = routes.forTrip($scope.trip.$id); 
+
+    $scope.updateMap = function(){
+      $scope.map = {center: {latitude: 46.931478, longitude: 7.966031 }, zoom: 8 };
+      $scope.options = {scrollwheel: false};
+      $scope.coordsUpdates = 0;
+      $scope.dynamicMoveCtr = 0;
+      var ii = 1; 
+      $scope.routes.forEach( function(entry){
+        if (entry.start.coordinate){
+          $scope.markers.push({
+          id:ii,
+          latitude: entry.start.coordinate.y, 
+          longitude: entry.start.coordinate.x,
+          title: 'm' 
+          });
+          ii = ii + 1; 
+        }
+      });
+    };
 
     $scope.$watch('routes',function(val){
       var start = null;
@@ -49,6 +70,7 @@ $scope.map = {
           timetable.getConnections(start,stop,function (data) {
             $scope.transport = data;
           });    
+          $scope.updateMap();
       });
     });
 

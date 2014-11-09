@@ -46,7 +46,10 @@
     <td></td>
   </tr>
   <tr ng-repeat="route in routes">
-    <td>{{route.start}}</td>
+
+    <td ng-if="route.start.name">{{route.start.name}}</td>
+    <td ng-if="!route.start.name">{{route.start}}</td>
+
     <td>{{route.stop}}</td>
     <td>{{route.duration}}</td>
     <td>{{route.activity_name}}</td>
@@ -62,6 +65,15 @@
 </button>    </td>
   </tr>
 </table>
+
+<h3>Map</h3>
+
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+        <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+{{markers}}
+
 
 <h3>Timetable</h3>
 

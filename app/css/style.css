@@ -9,7 +9,7 @@
 
 /* Basic */
 
-	.angular-google-map-container { height: 300px; width: 400px; }
+	.angular-google-map-container { height: 300px;  }
 
 	body, #skel-layers-wrapper {
 		background: #f3f6fa;
